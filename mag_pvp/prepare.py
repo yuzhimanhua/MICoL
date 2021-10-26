@@ -3,8 +3,7 @@ from collections import defaultdict
 import random
 
 dataset = 'MAG'
-metadata1 = 'reference'
-metadata2 = 'reference'
+metadata = 'venue'
 
 doc2text = {}
 docs = []
@@ -16,44 +15,27 @@ with open(f'../{dataset}/train_text.txt') as fin:
 		doc2text[doc] = text
 		docs.append(doc)
 
-meta12doc = defaultdict(set)
-doc2meta1 = {}
-doc2meta2 = {}
+meta2doc = defaultdict(set)
+doc2meta = {}
 with open(f'../{dataset}/{dataset}_train.json') as fin:
 	for idx, line in enumerate(fin):
 		js = json.loads(line)
 		doc = js['paper']
+		metas = js[metadata]
+		if not isinstance(metas, list):
+			metas = [metas]
+		for meta in metas:
+			meta2doc[meta].add(doc)
+		doc2meta[doc] = set(metas)
 
-		meta1s = js[metadata1]
-		if not isinstance(meta1s, list):
-			meta1s = [meta1s]
-		for meta1 in meta1s:
-			meta12doc[meta1].add(doc)
-		doc2meta1[doc] = set(meta1s)
-
-		meta2s = js[metadata2]
-		if not isinstance(meta2s, list):
-			meta2s = [meta2s]
-		doc2meta2[doc] = set(meta2s)
-
-tot = len(doc2meta1)
+tot = len(doc2meta)
 with open('dataset.txt', 'w') as fout:
-	for idx, doc in enumerate(doc2meta1):
+	for idx, doc in enumerate(doc2meta):
 		# sample positive
-		meta1s = doc2meta1[doc]
+		metas = doc2meta[doc]
 		dps = []
-		for meta1 in meta1s:
-			candidates = []
-			for d_cand in list(meta12doc[meta1]):
-				if d_cand == doc:
-					continue
-				meta_intersec = doc2meta2[doc].intersection(doc2meta2[d_cand])
-				if metadata1 != metadata2:
-					if len(meta_intersec) >= 1:
-						candidates.append(d_cand)
-				else:
-					if len(meta_intersec) >= 2:
-						candidates.append(d_cand)
+		for meta in metas:
+			candidates = list(meta2doc[meta])
 			if len(candidates) > 1:
 				while True:
 					dp = random.choice(candidates)

@@ -2,11 +2,12 @@ import json
 from collections import defaultdict
 import random
 
+dataset = 'MAG'
 metadata = 'author'
 
 doc2text = {}
 docs = []
-with open('../../MAG/train_text.txt') as fin:
+with open(f'../{dataset}/train_text.txt') as fin:
 	for idx, line in enumerate(fin):
 		data = line.strip().split('\t')
 		doc = data[0]
@@ -16,7 +17,7 @@ with open('../../MAG/train_text.txt') as fin:
 
 meta2doc = defaultdict(set)
 doc2meta = {}
-with open('../../MAG/MAG_train.json') as fin:
+with open(f'../{dataset}/{dataset}_train.json') as fin:
 	for idx, line in enumerate(fin):
 		js = json.loads(line)
 		doc = js['paper']
@@ -28,35 +29,28 @@ with open('../../MAG/MAG_train.json') as fin:
 		doc2meta[doc] = set(metas)
 
 tot = len(doc2meta)
-train_ratio = 0.9
-fout = open('train.txt', 'w')
-for idx, doc in enumerate(doc2meta):
-	if idx == int(tot*train_ratio):
-		fout.close()
-		fout = open('dev.txt', 'w')
-	
-	# sample positive
-	metas = doc2meta[doc]
-	dps = []
-	for meta in metas:
-		candidates = list(meta2doc[meta])
-		if len(candidates) > 1:
-			while True:
-				dp = random.choice(candidates)
-				if dp != doc:
-					dps.append(dp)
-					break
-	if len(dps) == 0:
-		continue
-	dp = random.choice(dps)
+with open('dataset.txt', 'w') as fout:
+	for idx, doc in enumerate(doc2meta):
+		# sample positive
+		metas = doc2meta[doc]
+		dps = []
+		for meta in metas:
+			candidates = list(meta2doc[meta])
+			if len(candidates) > 1:
+				while True:
+					dp = random.choice(candidates)
+					if dp != doc:
+						dps.append(dp)
+						break
+		if len(dps) == 0:
+			continue
+		dp = random.choice(dps)
 
-	# sample negative (for validation only)
-	while True:
-		dn = random.choice(docs)
-		if dn != doc and dn != dp:
-			break	
-			
-	fout.write('1\t'+doc2text[doc]+'\t'+doc2text[dp]+'\n')
-	fout.write('0\t'+doc2text[doc]+'\t'+doc2text[dn]+'\n')
-
-fout.close()
+		# sample negative (for validation only)
+		while True:
+			dn = random.choice(docs)
+			if dn != doc and dn != dp:
+				break	
+				
+		fout.write('1\t'+doc2text[doc]+'\t'+doc2text[dp]+'\n')
+		fout.write('0\t'+doc2text[doc]+'\t'+doc2text[dn]+'\n')

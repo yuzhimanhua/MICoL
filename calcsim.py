@@ -14,20 +14,20 @@ with open(os.path.join(args.output_dir, f'prediction_{args.architecture}.txt')) 
 		pred.append(data)
 
 i = 0
-with open('../LabelMatching_MAG/mag_filter.json') as fin, open(os.path.join(args.output_dir, f'prediction_{args.architecture}.json'), 'w') as fout:
+with open('../BM25/mag_filter.json') as fin, open(os.path.join(args.output_dir, f'prediction_{args.architecture}.json'), 'w') as fout:
 	for line in fin:
 		js = json.loads(line)
 		out = {}
 		out['paper'] = js['paper']
 		out['label'] = js['label']
 
-		labels = js['matched_id']
+		labels = js['predicted_label']
 		l = len(labels)
 		sim = {}
 		for label, score in zip(labels, pred[i:i+l]):
 			sim[label] = score
 		sim_sorted = sorted(sim.items(), key=lambda x:x[1], reverse=True)
-		out['matched_id'] = sim_sorted
+		out['predicted_label'] = sim_sorted
 		fout.write(json.dumps(out)+'\n')
 
 		i += l

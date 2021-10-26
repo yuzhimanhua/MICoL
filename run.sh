@@ -1,5 +1,5 @@
 dataset="mag"
-path="pr"
+path="prp"
 architecture="cross"
 test_file="original"
 

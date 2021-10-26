@@ -145,7 +145,6 @@ if __name__ == '__main__':
 	print(args)
 	set_seed(args)
 
-	## temporal parameter settings
 	if args.architecture != 'poly':
 		args.poly_m = 0
 	if args.architecture == 'bi':

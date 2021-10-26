@@ -3,8 +3,8 @@ from collections import defaultdict
 import random
 
 dataset = 'MAG'
-metadata1 = 'reference'
-metadata2 = 'reference'
+metadata1 = 'author'
+metadata2 = 'author'
 
 doc2text = {}
 docs = []
