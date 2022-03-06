@@ -1,4 +1,4 @@
-# Metadata-Induced Contrastive Learning for Zero-Shot Extreme Multi-Label Text Classification
+# Metadata-Induced Contrastive Learning for Zero-Shot Multi-Label Text Classification
 
 ## Installation
 For training, GPUs are strongly recommended. We use one NVIDIA V100 to run each experiment.
