@@ -10,7 +10,7 @@ pip3 install -r requirements.txt
 ```
 
 ## Setup
-To reproduce the results in our paper, you need to first download the [**datasets**](https://gofile.io/d/QpYndh). Two datasets are used in our paper: **MAG-CS** and **PubMed**. Once you unzip the downloaded file (i.e., ```MICoL.zip```), you can see **four** folders: ```MAG/``` is the dataset folder of MAG-CS; ```PubMed/``` is the dataset folder of PubMed; ```scibert_scivocab_uncased/``` is the pre-trained SciBERT model; ```BM25/``` contains the candidate labels selected from the retrieval stage.
+To reproduce the results in our paper, you need to first download the [**datasets**](https://drive.google.com/file/d/1FD0ddpMmWMFDdk1SwbEZ3xy93b1NvbBz/view?usp=sharing). Two datasets are used in our paper: **MAG-CS** and **PubMed**. Once you unzip the downloaded file (i.e., ```MICoL.zip```), you can see **four** folders: ```MAG/``` is the dataset folder of MAG-CS; ```PubMed/``` is the dataset folder of PubMed; ```scibert_scivocab_uncased/``` is the pre-trained SciBERT model; ```BM25/``` contains the candidate labels selected from the retrieval stage.
 
 Put these four folders under the main directory ```./```. Then the following running script can be used to prepare training and testing data, where training document pairs are generated from metadata for contrastive learning.
 ```
