@@ -24,8 +24,6 @@ with open('MAG/MAG_train.json') as fin:
 
 p1 = p3 = p5 = 0
 n3 = n5 = 0
-psp1 = psp3 = psp5 = 0
-psn3 = psn5 = 0
 tot = 0
 with open(os.path.join(args.output_dir, f'prediction_{args.architecture}.json')) as fin:
 	for idx, line in enumerate(fin):
@@ -75,4 +73,4 @@ with open(os.path.join(args.output_dir, f'prediction_{args.architecture}.json'))
 		tot += 1
 
 print(p1/tot, p3/tot, p5/tot, n3/tot, n5/tot)
-print(psp1/tot, psp3/tot, psp5/tot, psn3/tot, psn5/tot)
+# print(psp1/tot, psp3/tot, psp5/tot, psn3/tot, psn5/tot)

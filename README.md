@@ -1,4 +1,5 @@
 # Metadata-Induced Contrastive Learning for Zero-Shot Multi-Label Text Classification
+**We are still finalizing this code repository. The current version should be enough to reproduce results in our paper. We will release an easier-to-run version before the WWW 2022 conference.**
 
 ## Installation
 For training, GPUs are strongly recommended. We use one NVIDIA V100 to run each experiment.
@@ -30,4 +31,4 @@ Please use the following script to perform evaluation.
 ```
 python patk.py
 ```
-It will output P@_k_, NDCG@_k_, PSP@_k_, and PSN@_k_ scores (_k_=1,3,5). 
+It will output P@_k_ and NDCG@_k_ scores (_k_=1,3,5). 
