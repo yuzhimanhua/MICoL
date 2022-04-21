@@ -18,7 +18,7 @@ from transformers.optimization import AdamW, get_linear_schedule_with_warmup
 
 from dataset import SelectionDataset
 from transform import SelectionSequentialTransform, SelectionJoinTransform, SelectionConcatTransform
-from encoder import PolyEncoder, BiEncoder, CrossEncoder
+from encoder import BiEncoder, CrossEncoder
 
 from sklearn.metrics import label_ranking_average_precision_score
 
@@ -108,7 +108,7 @@ if __name__ == '__main__':
 	parser.add_argument("--test_file", required=True, type=str)
 
 	parser.add_argument("--use_pretrain", action="store_true")
-	parser.add_argument("--architecture", required=True, type=str, help='[bi, cross, poly]')
+	parser.add_argument("--architecture", required=True, type=str, help='[bi, cross]')
 
 	parser.add_argument("--max_contexts_length", default=256, type=int)
 	parser.add_argument("--max_response_length", default=256, type=int)
@@ -116,19 +116,16 @@ if __name__ == '__main__':
 	parser.add_argument("--eval_batch_size", default=128, type=int, help="Total batch size for eval.")
 	parser.add_argument("--print_freq", default=500, type=int, help="Log frequency")
 
-	parser.add_argument("--poly_m", default=360, type=int, help="Number of m of polyencoder")
-
 	parser.add_argument("--learning_rate", default=5e-5, type=float, help="The initial learning rate for Adam.")
 	parser.add_argument("--weight_decay", default=0.01, type=float)
 	parser.add_argument("--warmup_steps", default=100, type=float)
 	parser.add_argument("--adam_epsilon", default=1e-8, type=float, help="Epsilon for Adam optimizer.")
 	parser.add_argument("--max_grad_norm", default=1.0, type=float, help="Max gradient norm.")
 
-	parser.add_argument("--num_train_epochs", default=3.0, type=float,
-											help="Total number of training epochs to perform.")
+	parser.add_argument("--num_train_epochs", default=3.0, type=float, help="Total number of training epochs to perform.")
 	parser.add_argument('--seed', type=int, default=12345, help="random seed for initialization")
-	parser.add_argument('--gradient_accumulation_steps', type=int, default=1,
-											help="Number of updates steps to accumulate before performing a backward/update pass.")
+	parser.add_argument('--gradient_accumulation_steps', type=int, default=1, help="Number of updates steps to accumulate before performing a backward/update pass.")
+	parser.add_argument("--poly_m", default=0, type=int)
 	parser.add_argument(
 		"--fp16",
 		action="store_true",
@@ -145,8 +142,6 @@ if __name__ == '__main__':
 	print(args)
 	set_seed(args)
 
-	if args.architecture != 'poly':
-		args.poly_m = 0
 	if args.architecture == 'bi':
 		args.train_batch_size = 8
 		args.eval_batch_size = 256
@@ -207,9 +202,7 @@ if __name__ == '__main__':
 	else:
 		bert = BertModelClass(bert_config)
 
-	if args.architecture == 'poly':
-		model = PolyEncoder(bert_config, bert=bert, poly_m=args.poly_m)
-	elif args.architecture == 'bi':
+	if args.architecture == 'bi':
 		model = BiEncoder(bert_config, bert=bert)
 	elif args.architecture == 'cross':
 		model = CrossEncoder(bert_config, bert=bert)

@@ -14,14 +14,14 @@ with open(os.path.join(args.output_dir, f'prediction_{args.architecture}.txt')) 
 		pred.append(data)
 
 i = 0
-with open('../BM25/mag_filter.json') as fin, open(os.path.join(args.output_dir, f'prediction_{args.architecture}.json'), 'w') as fout:
+with open(f'{dataset}/{dataset}_candidates.json') as fin, open(os.path.join(args.output_dir, f'prediction_{args.architecture}.json'), 'w') as fout:
 	for line in fin:
-		js = json.loads(line)
+		data = json.loads(line)
 		out = {}
-		out['paper'] = js['paper']
-		out['label'] = js['label']
+		out['paper'] = data['paper']
+		out['label'] = data['label']
 
-		labels = js['predicted_label']
+		labels = data['predicted_label']
 		l = len(labels)
 		sim = {}
 		for label, score in zip(labels, pred[i:i+l]):
