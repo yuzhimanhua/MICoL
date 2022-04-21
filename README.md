@@ -1,8 +1,18 @@
 # Metadata-Induced Contrastive Learning for Zero-Shot Multi-Label Text Classification
-**We are still finalizing this code repository. The current version should be enough to reproduce results in our paper. We will release an easier-to-run version before the WWW 2022 conference.**
+
+This repository contains the source code for [**Metadata-Induced Contrastive Learning for Zero-Shot Multi-Label Text Classification**](https://arxiv.org/abs/2202.05932).
+
+## Links
+
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Data](#data)
+- [Running](#running)
+- [Citation](#citation)
+
 
 ## Installation
-For training, GPUs are strongly recommended. We use one NVIDIA V100 to run each experiment.
+For training, GPUs are strongly recommended. We use one NVIDIA V100 16GB to run each experiment.
 
 ### Dependency
 We use PyTorch and HuggingFace transformers to build the model. The dependencies are summarized in the file ```requirements.txt```. You can install them like this:
@@ -10,25 +20,38 @@ We use PyTorch and HuggingFace transformers to build the model. The dependencies
 pip3 install -r requirements.txt
 ```
 
-## Setup
-To reproduce the results in our paper, you need to first download the [**datasets**](https://drive.google.com/file/d/1FD0ddpMmWMFDdk1SwbEZ3xy93b1NvbBz/view?usp=sharing). Two datasets are used in our paper: **MAG-CS** and **PubMed**. Once you unzip the downloaded file (i.e., ```MICoL.zip```), you can see **four** folders: ```MAG/``` is the dataset folder of MAG-CS; ```PubMed/``` is the dataset folder of PubMed; ```scibert_scivocab_uncased/``` is the pre-trained SciBERT model; ```BM25/``` contains the candidate labels selected from the retrieval stage.
+## Quick Start
+To reproduce the results in our paper, you need to first download the [**datasets**](https://drive.google.com/file/d/1FD0ddpMmWMFDdk1SwbEZ3xy93b1NvbBz/view?usp=sharing). Two datasets are used in our paper: **MAG-CS** and **PubMed**. Once you unzip the downloaded file (i.e., ```MICoL.zip```), you can see **three** folders: ```MAG/``` is the dataset folder of MAG-CS; ```PubMed/``` is the dataset folder of PubMed; ```scibert_scivocab_uncased/``` is the pre-trained SciBERT model. (The pre-trained SciBERT model is from [here](https://huggingface.co/allenai/scibert_scivocab_uncased/tree/main).)
 
-Put these four folders under the main directory ```./```. Then the following running script can be used to prepare training and testing data, where training document pairs are generated from metadata for contrastive learning.
+Put the three folders under the main directory ```./```. Then you need to run the following scripts. 
+
+### Input Preparation
+Prepare training and testing data. Training document pairs are generated using document metadata for contrastive learning.
 ```
-python prepare_test.py
-./gen_train.sh
+./prepare.sh
 ```
 
-## Training and Prediction
-Please use the following script to conduct training and prediction.
+### Training, Testing, and Evaluation
 ```
 ./run.sh
 ```
-You can change the dataset (mag or pubmed), the meta-path/meta-graph (10 choices), and the architecture (bi or cross) in the script.
+P@_k_, NDCG@_k_, PSP@_k_, and PSN@_k_ scores (_k_=1,3,5) will be shown in the last several lines of the output. The prediction results can be found in ```./{dataset}_output/prediction_{architecture}.json``` (e.g., ```./MAG_output/prediction_cross.json```).
 
-## Evaluation
-Please use the following script to perform evaluation.
+You can change the dataset (MAG or PubMed), the meta-path/meta-graph (10 choices, see the [Running](#running) section below), and the architecture (bi or cross) in the script.
+
+## Data
+TBD
+
+## Running
+TBD
+
+## Citation
+Our implementation is adapted from [Poly-Encoder](https://github.com/chijames/Poly-Encoder). If you find the implementation useful, please cite the following paper:
 ```
-python patk.py
+@article{zhang2022metadata,
+  title={Metadata-Induced Contrastive Learning for Zero-Shot Multi-Label Text Classification},
+  author={Zhang, Yu and Shen, Zhihong and Wu, Chieh-Han and Xie, Boya and Hao, Junheng and Wang, Ye-Yi and Wang, Kuansan and Han, Jiawei},
+  journal={arXiv preprint arXiv:2202.05932},
+  year={2022}
+}
 ```
-It will output P@_k_ and NDCG@_k_ scores (_k_=1,3,5). 
