@@ -137,10 +137,12 @@ The [Quick Start](#quick-start) section should be enough to reproduce the result
 ## Citation
 Our implementation is adapted from [Poly-Encoder](https://github.com/chijames/Poly-Encoder) and [CorNet](https://github.com/XunGuangxu/CorNet). If you find the implementation useful, please cite the following paper:
 ```
-@article{zhang2022metadata,
+@inproceedings{zhang2022metadata,
   title={Metadata-Induced Contrastive Learning for Zero-Shot Multi-Label Text Classification},
   author={Zhang, Yu and Shen, Zhihong and Wu, Chieh-Han and Xie, Boya and Hao, Junheng and Wang, Ye-Yi and Wang, Kuansan and Han, Jiawei},
-  journal={arXiv preprint arXiv:2202.05932},
-  year={2022}
+  booktitle={WWW'22},
+  pages={3162--3173},
+  year={2022},
+  organization={ACM}
 }
 ```
