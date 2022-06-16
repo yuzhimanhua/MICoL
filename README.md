@@ -15,7 +15,7 @@ This repository contains the source code for [**Metadata-Induced Contrastive Lea
 For training, GPUs are strongly recommended. We use one NVIDIA V100 16GB to run each experiment.
 
 ### Dependency
-We use PyTorch and HuggingFace transformers to build the model. The dependencies are summarized in the file ```requirements.txt```. You can install them like this:
+The code is written in Python 3.6. We use PyTorch and HuggingFace transformers to build the model. The dependencies are summarized in the file ```requirements.txt```. You can install them like this:
 ```
 pip3 install -r requirements.txt
 ```
