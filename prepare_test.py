@@ -1,6 +1,7 @@
 import json
 import argparse
 import os
+from tqdm import tqdm
 
 parser = argparse.ArgumentParser(description='main', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument('--dataset', default='MAG', type=str)
@@ -12,7 +13,7 @@ if not os.path.exists(f'{dataset}_input/'):
 
 doc2text = {}
 with open(f'{dataset}/{dataset}_test.json') as fin:
-	for line in fin:
+	for line in tqdm(fin):
 		data = json.loads(line)
 		doc = data['paper']
 		text = data['text'].replace('_', ' ')
@@ -20,14 +21,14 @@ with open(f'{dataset}/{dataset}_test.json') as fin:
 
 label2text = {}
 with open(f'{dataset}/{dataset}_label.json') as fin:
-	for line in fin:
+	for line in tqdm(fin):
 		data = json.loads(line)
 		label = data['label']
 		text = data['combined_text']
 		label2text[label] = text
 
 with open(f'{dataset}/{dataset}_candidates.json') as fin, open(f'{dataset}_input/test.txt', 'w') as fout:
-	for line in fin:
+	for line in tqdm(fin):
 		data = json.loads(line)
 		doc_text = doc2text[data['paper']]	
 		labels = data['predicted_label']

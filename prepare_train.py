@@ -3,15 +3,14 @@ import argparse
 import os
 from collections import defaultdict
 import random
+from tqdm import tqdm
 
 # P->P and P<-P
 def no_intermediate_node(dataset, doc2text, docs, metadata):
 	meta2doc = defaultdict(set)
 	doc2meta = {}
 	with open(f'{dataset}/{dataset}_train.json') as fin:
-		for idx, line in enumerate(fin):
-			if idx % 100000 == 0:
-				print(idx)
+		for idx, line in enumerate(tqdm(fin)):
 			data = json.loads(line)
 			doc = data['paper']
 
@@ -23,10 +22,7 @@ def no_intermediate_node(dataset, doc2text, docs, metadata):
 			doc2meta[doc] = set(metas)
 
 	with open(f'{dataset}_input/dataset.txt', 'w') as fout:
-		for idx, doc in enumerate(doc2meta):
-			if idx % 100000 == 0:
-				print(idx)
-
+		for idx, doc in enumerate(tqdm(doc2meta)):
 			# sample positive
 			dps = [x for x in doc2meta[doc] if x in doc2text]
 			if len(dps) == 0:
@@ -48,9 +44,7 @@ def one_intermediate_node(dataset, doc2text, docs, metadata):
 	meta2doc = defaultdict(set)
 	doc2meta = {}
 	with open(f'{dataset}/{dataset}_train.json') as fin:
-		for idx, line in enumerate(fin):
-			if idx % 100000 == 0:
-				print(idx)
+		for idx, line in enumerate(tqdm(fin)):
 			data = json.loads(line)
 			doc = data['paper']
 
@@ -62,10 +56,7 @@ def one_intermediate_node(dataset, doc2text, docs, metadata):
 			doc2meta[doc] = set(metas)
 
 	with open(f'{dataset}_input/dataset.txt', 'w') as fout:
-		for idx, doc in enumerate(doc2meta):
-			if idx % 100000 == 0:
-				print(idx)
-
+		for idx, doc in enumerate(tqdm(doc2meta)):
 			# sample positive
 			metas = doc2meta[doc]
 			dps = []
@@ -97,9 +88,7 @@ def two_intermediate_node(dataset, doc2text, docs, metadata1, metadata2):
 	doc2meta1 = {}
 	doc2meta2 = {}
 	with open(f'{dataset}/{dataset}_train.json') as fin:
-		for idx, line in enumerate(fin):
-			if idx % 100000 == 0:
-				print(idx)
+		for idx, line in enumerate(tqdm(fin)):
 			data = json.loads(line)
 			doc = data['paper']
 
@@ -116,10 +105,7 @@ def two_intermediate_node(dataset, doc2text, docs, metadata1, metadata2):
 			doc2meta2[doc] = set(meta2s)
 
 	with open(f'{dataset}_input/dataset.txt', 'w') as fout:
-		for idx, doc in enumerate(doc2meta1):
-			if idx % 100000 == 0:
-				print(idx)
-
+		for idx, doc in enumerate(tqdm(doc2meta1)):
 			# sample positive
 			meta1s = doc2meta1[doc]
 			dps = []
@@ -166,9 +152,7 @@ metagraph = args.metagraph
 doc2text = {}
 docs = []
 with open(f'{dataset}/{dataset}_train.json') as fin:
-	for idx, line in enumerate(fin):
-		if idx % 100000 == 0:
-			print(idx)
+	for idx, line in enumerate(tqdm(fin)):
 		data = json.loads(line)
 		doc = data['paper']
 		text = data['text'].replace('_', ' ')

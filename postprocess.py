@@ -1,6 +1,7 @@
 import json
 import argparse
 import os
+from tqdm import tqdm
 
 parser = argparse.ArgumentParser(description='main', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument('--dataset', required=True, type=str)
@@ -17,7 +18,7 @@ with open(os.path.join(args.output_dir, f'prediction_{args.architecture}.txt')) 
 i = 0
 with open(f'{args.dataset}/{args.dataset}_candidates.json') as fin, \
      open(os.path.join(args.output_dir, f'prediction_{args.architecture}.json'), 'w') as fout:
-	for line in fin:
+	for line in tqdm(fin):
 		data = json.loads(line)
 		out = {}
 		out['paper'] = data['paper']

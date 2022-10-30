@@ -1,10 +1,13 @@
 dataset=MAG
 metagraph=PRP
 
-echo "=====Step 1: Preparing Testing Data====="
+green=`tput setaf 2`
+reset=`tput sgr0`
+
+echo "${green}=====Step 1: Preparing Testing Data=====${reset}"
 python prepare_test.py --dataset ${dataset}
 
-echo "=====Step 2: Generating Training Data====="
+echo "${green}=====Step 2: Generating Training Data=====${reset}"
 python prepare_train.py --dataset ${dataset} --metagraph ${metagraph}
 
 head -100000 ${dataset}_input/dataset.txt > ${dataset}_input/train.txt
