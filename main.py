@@ -112,8 +112,8 @@ if __name__ == '__main__':
 
 	parser.add_argument("--max_contexts_length", default=256, type=int)
 	parser.add_argument("--max_response_length", default=256, type=int)
-	parser.add_argument("--train_batch_size", default=4, type=int, help="Total batch size for training.")
-	parser.add_argument("--eval_batch_size", default=128, type=int, help="Total batch size for eval.")
+	parser.add_argument("--train_batch_size", default=0, type=int, help="Total batch size for training.")
+	parser.add_argument("--eval_batch_size", default=0, type=int, help="Total batch size for eval.")
 	parser.add_argument("--print_freq", default=500, type=int, help="Log frequency")
 
 	parser.add_argument("--learning_rate", default=5e-5, type=float, help="The initial learning rate for Adam.")
@@ -142,12 +142,17 @@ if __name__ == '__main__':
 	print(args)
 	set_seed(args)
 
-	if args.architecture == 'bi':
-		args.train_batch_size = 8
-		args.eval_batch_size = 256
-	elif args.architecture == 'cross':
-		args.train_batch_size = 4
-		args.eval_batch_size = 128
+	if args.train_batch_size == 0:
+		if args.architecture == 'bi':
+			args.train_batch_size = 8
+		elif args.architecture == 'cross':
+			args.train_batch_size = 4
+	
+	if args.eval_batch_size == 0:
+		if args.architecture == 'bi':
+			args.eval_batch_size = 256
+		elif args.architecture == 'cross':
+			args.eval_batch_size = 128
 
 	MODEL_CLASSES = {
 		'bert': (BertConfig, BertTokenizerFast, BertModel),
