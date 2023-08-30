@@ -14,7 +14,7 @@ This repository contains the source code for [**Metadata-Induced Contrastive Lea
 
 
 ## Installation
-For training, GPUs are strongly recommended. We use one NVIDIA V100 16GB to run each experiment.
+For training, GPUs are strongly recommended. We use one NVIDIA V100 16GB GPU in our experiments.
 
 ### Dependency
 The code is written in Python 3.6. We use PyTorch and HuggingFace transformers to build the model. The dependencies are summarized in the file ```requirements.txt```. You can install them like this:
@@ -137,7 +137,7 @@ The [Quick Start](#quick-start) section should be enough to reproduce the result
 (2) In ```run.sh```, you can choose between two different architectures: Bi-Encoder (```architecture=bi```) and Cross-Encoder (```architecture=cross```).
 
 ## Citation
-Our implementation is adapted from [Poly-Encoder](https://github.com/chijames/Poly-Encoder) and [CorNet](https://github.com/XunGuangxu/CorNet). If you find the implementation useful, please cite the following paper:
+Our implementation is adapted from [Poly-Encoder](https://github.com/chijames/Poly-Encoder) and [CorNet](https://github.com/XunGuangxu/CorNet). If you find this repository useful, please cite the following paper:
 ```
 @inproceedings{zhang2022metadata,
   title={Metadata-Induced Contrastive Learning for Zero-Shot Multi-Label Text Classification},
