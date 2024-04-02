@@ -144,7 +144,6 @@ Our implementation is adapted from [Poly-Encoder](https://github.com/chijames/Po
   author={Zhang, Yu and Shen, Zhihong and Wu, Chieh-Han and Xie, Boya and Hao, Junheng and Wang, Ye-Yi and Wang, Kuansan and Han, Jiawei},
   booktitle={WWW'22},
   pages={3162--3173},
-  year={2022},
-  organization={ACM}
+  year={2022}
 }
 ```
